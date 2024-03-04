@@ -34,10 +34,26 @@ allNumbers = []
 for element in allData:
    # print(element.strip())
     for char in element:
-        if char.isdigit():
-            allNumbers.append(int(char))
+        lineNumber = ''.join(char for char in element if char.isdigit())
+        if lineNumber:
+            allNumbers.append(int(lineNumber))
 
-print(allNumbers)
+print("linia kontrolna terefere")
+
+newNumberList = []
+for number in allNumbers:
+    if number <= 9:
+        newNumber = int(str(number) * 2)  # Podwojenie jednocyfrowej liczby poprzez jej duplikację
+    else:
+        first_digit = int(str(number)[0])
+        second_digit = int(str(number)[-1])
+        newNumber = first_digit * 10 + second_digit
+    newNumberList.append(newNumber)
+
+print(newNumberList)
+
+Calibration = sum(newNumberList)
+print(Calibration)
 
 
 # data = open("C:\\Users\\Tupta\\Desktop\\AdwentofCode\\day1\\day1.txt", "r")
