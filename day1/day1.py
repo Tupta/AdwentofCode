@@ -104,25 +104,43 @@ allData = []
 for line in data:
     allData.append(line.strip())
 
-word_values = {'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9}
+def replace_words_with_numbers(text):
+    words_to_numbers = {
+        'one': '1',
+        'two': '2',
+        'three': '3',
+        'four': '4',
+        'five': '5',
+        'six': '6',
+        'seven': '7',
+        'eight': '8',
+        'nine': '9'
+    }
 
-def convert_word_to_number(word):
-    return word_values.get(word.lower(), 0)
+    for word, number in words_to_numbers.items():
+        text = text.replace(word, number)
 
-for i, element in enumerate(allData):
-    word = ''
-    new_element = ''
-    for char in element:
-        if char.isalpha():
-            word += char
-        else:
-            if word.lower() in word_values:
-                new_element += str(word_values[word.lower()])
-                word = ''  # Resetuj słowo po przetworzeniu
-            new_element += char
-    if word.lower() in word_values:
-        new_element += str(word_values[word.lower()])
-    allData[i] = new_element
+    return text
+
+def double_single_digit_numbers(text):
+    for i in range(1, 10):
+        text = text.replace(str(i), str(i) * 2)
+    return text
+
+def sum_two_digit_numbers(text):
+    numbers = [int(num) for num in text.split() if len(num) == 2 and num != '10']
+    return sum(numbers)
+
+def process_text(text):
+    text = replace_words_with_numbers(text)
+    text = ''.join(filter(str.isdigit, text))
+    text = double_single_digit_numbers(text)
+    result = sum_two_digit_numbers(text)
+    return result
+
+text = "Two plus two is four, and five plus six is eleven."
+result = process_text(text)
+print("Sum of two-digit numbers in the text:", result)
 
 allNumbers = []
 for element in allData:
