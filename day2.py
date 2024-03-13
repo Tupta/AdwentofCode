@@ -10,10 +10,23 @@ red_limit = 12
 green_limit = 13
 blue_limit = 14
 
+# Funkcja sprawdzająca, czy gra jest możliwa
+def is_game_possible(cubes_data):
+    cubes = cubes_data.split(', ')
+    for cube in cubes:
+        color, count = cube.split()
+        if (color == 'red' and int(count) > red_limit) or \
+           (color == 'green' and int(count) > green_limit) or \
+           (color == 'blue' and int(count) > blue_limit):
+            return False
+    return True
+
 # Iteracja przez dane każdej gry
 for game_data in games_data:
     # Podzielenie danych gry na ID gry i zbiory kostek
     game_id, cubes_data = game_data.strip().split(': ')
+    game_id = game_id.replace('Game ', '')  # Usunięcie słowa "Game" z numeru ID gry
+
     cubes_sets = cubes_data.split('; ')
 
     # Inicjalizacja flagi, która będzie śledzić, czy gra jest możliwa
@@ -21,14 +34,8 @@ for game_data in games_data:
 
     # Iteracja przez zbiory kostek w danej grze
     for cubes_set in cubes_sets:
-        # Podzielenie zbioru kostek na kolor i liczbę
-        color, count = cubes_set.split()
-        count = int(count)
-
-        # Sprawdzenie, czy liczba kostek danego koloru przekracza limit
-        if (color == 'red' and count > red_limit) or \
-           (color == 'green' and count > green_limit) or \
-           (color == 'blue' and count > blue_limit):
+        # Sprawdzenie, czy gra jest możliwa
+        if not is_game_possible(cubes_set):
             is_possible = False
             break
 
