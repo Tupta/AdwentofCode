@@ -1,6 +1,29 @@
-# Wczytanie danych z pliku tekstowego
-with open('day2.txt', 'r') as file:
-    games_data = file.readlines()
+# example_list = ["Game 1: 9 red, 5 blue, 6 green; 6 red, 13 blue; 2 blue, 7 green, 5 red",
+#                 "Game 2: 6 red, 2 green, 2 blue; 12 green, 11 red, 17 blue; 2 blue, 10 red, 11 green; 13 green, 17 red; 15 blue, 20 red, 3 green; 3 blue, 11 red, 1 green",
+#                 "Game 3: 20 green, 1 blue, 7 red; 20 green, 7 blue; 18 red, 8 green, 3 blue; 7 red, 6 blue, 11 green; 11 red, 6 blue, 16 green"]
+
+# # Inicjalizacja listy, która będzie przechowywać numery ID gier, które byłyby możliwe
+# possible_games = []
+
+# # Ograniczenia dotyczące liczby kostek czerwonych, zielonych i niebieskich
+# red_limit = 12
+# green_limit = 13
+# blue_limit = 14
+
+# for game in example_list:
+#     game_id, cubes_data = game.strip().split(': ')
+#     game_id = game_id.replace("Game ", "")
+#     print(game_id)
+#     cubes_sets = cubes_data.split(';')
+#     for cubes_set in cubes_sets:
+#         cubes = cubes_set.split(', ')
+#         print(cubes)
+        
+        
+        
+example_list = ["Game 1: 9 red, 5 blue, 6 green; 6 red, 13 blue; 2 blue, 7 green, 5 red",
+                "Game 2: 6 red, 2 green, 2 blue; 12 green, 11 red, 17 blue; 2 blue, 10 red, 11 green; 13 green, 17 red; 15 blue, 20 red, 3 green; 3 blue, 11 red, 1 green",
+                "Game 3: 20 green, 1 blue, 7 red; 20 green, 7 blue; 18 red, 8 green, 3 blue; 7 red, 6 blue, 11 green; 11 red, 6 blue, 16 green"]
 
 # Inicjalizacja listy, która będzie przechowywać numery ID gier, które byłyby możliwe
 possible_games = []
@@ -10,41 +33,25 @@ red_limit = 12
 green_limit = 13
 blue_limit = 14
 
-# Funkcja sprawdzająca, czy gra jest możliwa
-def is_game_possible(cubes_data):
-    cubes = cubes_data.split(', ')
-    for cube in cubes:
-        color, count = cube.split()
-        if (color == 'red' and int(count) > red_limit) or \
-           (color == 'green' and int(count) > green_limit) or \
-           (color == 'blue' and int(count) > blue_limit):
-            return False
-    return True
-
-# Iteracja przez dane każdej gry
-for game_data in games_data:
-    # Podzielenie danych gry na ID gry i zbiory kostek
-    game_id, cubes_data = game_data.strip().split(': ')
-    game_id = game_id.replace('Game ', '')  # Usunięcie słowa "Game" z numeru ID gry
-
-    cubes_sets = cubes_data.split('; ')
-
-    # Inicjalizacja flagi, która będzie śledzić, czy gra jest możliwa
-    is_possible = True
-
-    # Iteracja przez zbiory kostek w danej grze
+for game in example_list:
+    game_id, cubes_data = game.strip().split(': ')
+    game_id = game_id.replace("Game ", "")
+    cubes_sets = cubes_data.split(';')
+    is_valid_game = True
+    
     for cubes_set in cubes_sets:
-        # Sprawdzenie, czy gra jest możliwa
-        if not is_game_possible(cubes_set):
-            is_possible = False
-            break
+        cubes = cubes_set.split(', ')
+        for cube in cubes:
+            count, color = cube.split()
+            count = int(count)
+            if color == "red" and count > red_limit:
+                is_valid_game = False
+            elif color == "green" and count > green_limit:
+                is_valid_game = False
+            elif color == "blue" and count > blue_limit:
+                is_valid_game = False
+    
+    if is_valid_game:
+        possible_games.append(game_id)
 
-    # Dodanie numeru ID gry do listy, jeśli gra jest możliwa
-    if is_possible:
-        possible_games.append(int(game_id))
-
-# Obliczenie sumy numerów ID gier, które byłyby możliwe
-sum_possible_games = sum(possible_games)
-
-# Wyświetlenie wyniku
-print("Suma numerów ID gier możliwych:", sum_possible_games)
+print("Possible games:", possible_games)
