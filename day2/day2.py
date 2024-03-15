@@ -1,3 +1,15 @@
+# advent of code day 2
+
+# Game data is in text file day2.txt
+# Determine which games would have been possible if the bag had been loaded with only 12 red cubes, 1
+# 3 green cubes, and 14 blue cubes. What is the sum of the IDs of those games?
+
+
+# #todo odczytanie z danych pliku tekstowego "day2" i wrzucenie ich do zmiennej, kolejne gry jako kolejne linie tekstu
+# #todo rozdzielenie numeru gry od wyników gry usuniecie słowa "Game" dla łątiwejszego przetwarzania numeru gry
+# #todo rozdzielenie wyników gier na poszczegolne elementy tak by mozna bylo porownac elementy pojedynczej gry z max iloscia kolorowych kosci
+# #todo sprawdzenie czy kazdy z elementow wylosowanych w danej grze nie przekracza limitu ilosciowego jezeli nie dodanie numeru gry do osobnego zbioru
+# #todo zsumowanie wszystkich numerów oznaczajacych gry mozliwe do przeprowadzenia i podanie wyniku tej sumy.
 
 # Wczytanie danych z pliku tekstowego
 with open('day2.txt', 'r') as file:
@@ -35,4 +47,6 @@ for game in games_data:
 
 print("Possible games:", possible_games)
 
-print(sum(possible_games))
+total_possible_games = sum(int(game_id) for game_id in possible_games)
+
+print("Suma numerów porzadkowych możliwych gier:", total_possible_games)
