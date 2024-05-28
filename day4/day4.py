@@ -26,6 +26,13 @@
 #to do obliczenie sily danego losu w grze i dodoanie go do zbioru liczb
 #poodsumwoanie i wyswietlenie informaccji o sile wszystkich losow
 
+import os
+
+# Sprawdź bieżący katalog roboczy
+print(os.getcwd())
+
+# Ustaw bieżący katalog roboczy na katalog skryptu
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 with open('day4.txt', 'r') as file:
     data = file.readlines()
